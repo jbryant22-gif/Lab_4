@@ -2,20 +2,51 @@
 //
 
 #include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
-    // Let's make a change
+    string foodName;
+    string cashNotes;
+    int itemQuantity;
+    char itemCode;
+    double unitPrice;
+    char isMember;
+
+    cout << "What food did you get? " << endl;
+    getline(cin, foodName);
+    cin.clear();
+
+    cout << "What is the item Code?" << endl;
+    cin >> itemCode;
+    cin.clear();
+
+    cout << "How many did you get? " << endl;
+    cin >> itemQuantity;
+    cin.clear();
+
+    cout << "What is the cost per unit? " << endl;
+    cin >> unitPrice;
+    cin.clear();
+
+    cout << "Are you a member? (y/n)" << endl;
+    cin >> isMember;
+    cin.clear();
+
+    if (isMember == 'y' || isMember == 'Y') {
+        unitPrice = unitPrice * 0.9;
+    }
+
+    cout << "Any notes from the Cashier? " << endl;
+    cin.ignore();
+    getline(cin, cashNotes);
+
+    cout << "item: " << foodName << setw(3) << "   QTY: " << itemQuantity << setw(10) << fixed << setprecision(2) << "   total price: $" << unitPrice * itemQuantity << endl;
+    cout << "Item Code: " << itemCode << endl;
+    cout << "Is Member: " << isMember << endl;
+    cout << "Notes from the Cashier: " << cashNotes << endl;
+
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
