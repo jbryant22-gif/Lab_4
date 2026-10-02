@@ -8,9 +8,10 @@ using namespace std;
 
 int main()
 {
+//<<<<<<< Updated upstream
     char drinkC, sizeC, isMember;
     string drink, size;
-    int setPrice;
+    double setPrice;
     setPrice = 5;
 
 
@@ -66,7 +67,41 @@ int main()
         setPrice = setPrice * 0.9;
     }
 
-    cout << "drink: "<< size << " " << drink << setw(10) << fixed << setprecision(2) << "Price ($): " << setPrice << endl;
+    double AR = setPrice * .065;
+    double FC = setPrice * .005;
+    double CM = setPrice * .02125;
+
+    cout << "Arkansas State Tax: 6.5% " << AR << endl;
+    cout << "Faulkner County Tax: 0.5% " << FC << endl;
+    cout << "Conway Municipal Tax: 2.125% " << CM << endl;
+
+    setPrice = setPrice + AR + FC + CM;
+
+    double Tip;
+    char TipS;
+    cout << "Tip Selection" << endl;
+    cout << setprecision(3) << "A: 15% " << setPrice * .15 << endl << "B: 20% " << setPrice * .2 << endl << "C: 25% " << setPrice * .25  << endl << "D: custom %" << endl;
+    cin >> TipS;
+
+    if (TipS == 'a' || TipS == 'A') {
+        setPrice = setPrice * .15 + setPrice;
+    }
+    else if (TipS == 'b' || TipS == 'B') {
+        setPrice = setPrice * .2 + setPrice;
+    }
+    else if (TipS == 'c' || TipS == 'C') {
+        setPrice = setPrice * .25 + setPrice;
+    }
+    else {
+        cout << "How much would you like to tip? ";
+        cin >> Tip;
+        setPrice = setPrice * (Tip / 100) + setPrice;
+    };
+
+
+    cout << "drink: "<< size << " " << drink << setw(10) << fixed << setprecision(2) << " Price ($): " << setPrice << endl;
+
+
 
 
 
