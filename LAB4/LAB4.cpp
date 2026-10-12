@@ -65,11 +65,11 @@ int main()
 		cin >> name;
 
 		cout << "Here's our menu!" << endl;
-		cout << "Drink" << setw(15) << "Small (S)" << setw(15) << "Medium (M)" << setw(15) << "Large (L)" << setw(15) << endl;
+		cout << "Food" << setw(30) << "Small (S) " << setw(10) << "Medium (M) " << setw(10) << "Large (L) " << setw(10) << endl;
 		cout << " " << endl;
-		cout << "Iced Coffee (A)" << setw(8) << "5.00" << setw(10) << "6.00" << setw(10) << "7.00" << setw(10) << endl;
-		cout << "Slushy (B)" << setw(13) << "6.00" << setw(10) << "7.00" << setw(10) << "8.00" << setw(10) << endl;
-		cout << "MilkShake (C)" << setw(10) << "8.00" << setw(10) << "9.00" << setw(10) << "10.00" << setw(10) << endl;
+		cout << "Bacon Cheeseburger (A)" << setw(14) << foodsm1 << setw(10) << foodme1 << setw(10) << foodlg1 << setw(10) << endl;
+		cout << "Loaded Cheesy Fries (B)" << setw(13) << foodsm2 << setw(10) << foodme2 << setw(10) << foodlg2 << setw(10) << endl;
+		cout << "Ceasar Salad (C)" << setw(20) << foodsm3 << setw(10) << foodme3 << setw(10) << foodlg3 << setw(10) << endl;
 
 		do {
 
@@ -92,18 +92,18 @@ int main()
 			switch (drinkC) {
 			case 'a':
 			case 'A':
-				drink = "Iced Coffee";
-				setPrice = 5.00;
+				drink = "Bacon Cheeseburger";
+				setPrice = 4.99;
 				break;
 			case 'b':
 			case 'B':
-				drink = "Slushy";
-				setPrice = 6.00;
+				drink = "Loaded Cheesy Fries";
+				setPrice = 5.99;
 				break;
 			case 'c':
 			case 'C':
-				drink = "Milk Shake";
-				setPrice = 8.00;
+				drink = "Ceasar Salad";
+				setPrice = 3.99;
 				break;
 			default:
 				cout << "Drink Error occured internally! Terminating Program." << endl;
