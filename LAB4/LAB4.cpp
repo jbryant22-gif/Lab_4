@@ -13,10 +13,11 @@ int main()
 {
 
 	char drinkC, sizeC, isMember, f1n;
-	string drink, size, cache, strSetPrice, recieptAccumulator, name, food1, food2, food3, bev, shake;
-	double setPrice, total, Pcache, Grandtotalsales = 0, foodsm1, foodme1, foodlg1, foodsm2, foodme2, foodlg2, foodsm3, foodme3, foodlg3, bevsm, bevme, bevlg, shakesm, shakeme, shakelg;
-	int totalCustomers = 1;
-	
+	string drink, size, cache, strSetPrice, recieptAccumulator, name, food1, food2, food3, foodaccum;
+	double setPrice, total, Pcache, Grandtotalsales = 0, foodsm1, foodme1, foodlg1
+		, foodsm2, foodme2, foodlg2, foodsm3, foodme3, foodlg3;
+	int totalCustomers = 1, foodamount1 = 50, foodamount2 = 50, foodamount3 = 50, count1 = 0, count2 = 0, count3 = 0;
+
 	ofstream reciept_fout;
 	ifstream Bacon_Cheeseburger_fin;
 
@@ -41,18 +42,8 @@ int main()
 	Bacon_Cheeseburger_fin >> foodsm3;
 	Bacon_Cheeseburger_fin >> foodme3;
 	Bacon_Cheeseburger_fin >> foodlg3;
-	Bacon_Cheeseburger_fin >> bev;
-	Bacon_Cheeseburger_fin >> bevsm;
-	Bacon_Cheeseburger_fin >> bevme;
-	Bacon_Cheeseburger_fin >> bevlg;
-	Bacon_Cheeseburger_fin >> shake;
-	Bacon_Cheeseburger_fin >> shakesm;
-	Bacon_Cheeseburger_fin >> shakeme;
-	Bacon_Cheeseburger_fin >> shakelg;
-	
+
 	Bacon_Cheeseburger_fin.close();
-	cout << food1 << endl;
-	cout << shake << endl;
 
 	for (char NewCustomer = 'y';(NewCustomer == 'y' || NewCustomer == 'Y'); totalCustomers++) {
 		total = 0;
@@ -106,7 +97,7 @@ int main()
 				setPrice = 3.99;
 				break;
 			default:
-				cout << "Drink Error occured internally! Terminating Program." << endl;
+				cout << "Food Error occured internally! Terminating Program." << endl;
 				return 0;
 			}
 			switch (sizeC) {
@@ -133,10 +124,24 @@ int main()
 			strSetPrice = to_string(setPrice);
 			strSetPrice = strSetPrice.substr(0, strSetPrice.find(".") + 3);
 
-			recieptAccumulator += "Drink: " + drink + "\nSize: " + size + "\nPrice: $" + strSetPrice + "\n\n";
+			recieptAccumulator += "Food: " + drink + "\nSize: " + size + "\nPrice: $" + strSetPrice + "\n\n";
 			cout << "Drink and size selected: " << drink << " " << size << endl;
 			cout << "Would you like to proceed to checkout? (Y/N) :" << endl;
 			cin >> f1n;
+			if (drink == "Bacon Cheeseburger") {
+				foodamount1 -= 1;
+				count1 += 1;
+			}
+			else if (drink == "Loaded Cheesy Fries") {
+				foodamount2 -= 1;
+				count2 += 1;
+			}
+			else {
+				foodamount3 -= 1;
+				count2 += 1;
+			}
+
+
 
 			total += setPrice;
 		} while (f1n == 'n' || f1n == 'N');
@@ -179,15 +184,22 @@ int main()
 				total = total * (Tip / 100) + total;
 			}
 			cout << "Alright " << name << ", here's your receipt!" << endl;
+			reciept_fout.open("reciept_fout");
 			cout << recieptAccumulator << endl;
 			cout << "Your total is: $" << fixed << setprecision(2) << total << endl;
 			cout << "Thank you for your purchase!" << endl;
 			cout << "Heres your rewards points: ";
+			reciept_fout << recieptAccumulator << endl;
+			reciept_fout << "Your total is: $" << fixed << setprecision(2) << total << endl;
+			reciept_fout << "Thank you for your purchase!" << endl;
+			reciept_fout << "Heres your rewards points: ";
 			for (int i = total / 3; i >= 0; i--) {
 				cout << "*";
+				reciept_fout << "*";
 			}
 			Grandtotalsales += total;
 			cout << endl;
+			reciept_fout.close();
 
 		}
 		else {
@@ -196,7 +208,10 @@ int main()
 		cout << "New Customer? (y/n) " << endl;
 		cin >> NewCustomer;
 		if (NewCustomer != 'y') {
-			cout << "There were " << totalCustomers << " customers today." << endl << "You made $" << Grandtotalsales << " today.";
+			cout << "There were " << totalCustomers << " customers today." << endl << "You made $" << Grandtotalsales << " today." << endl;
+			cout << "There were 50 Bacon Cheeseburgers, and now there are " << foodamount1 << ". There were " << count1 << " sold." << endl;
+			cout << "There were 50 Loaded Cheesy Fries, and now there are " << foodamount2 << ". There were " << count2 << " sold." << endl;
+			cout << "There were 50 Ceasar Salads, and now there are " << foodamount3 << ". There were " << count3 << " sold." << endl;
 			return 0;
 		}
 	}
