@@ -1,26 +1,64 @@
-// LAB4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Lab7.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <numeric>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 int main()
 {
-	//<<<<<<< Updated upstream
-	char drinkC, sizeC, isMember, fin;
-	string drink, size, cache, strSetPrice, recieptAccumulator, name;
-	double setPrice, total, Pcache, Grandtotalsales = 0;
+
+	char drinkC, sizeC, isMember, f1n;
+	string drink, size, cache, strSetPrice, recieptAccumulator, name, food1, food2, food3, bev, shake;
+	double setPrice, total, Pcache, Grandtotalsales = 0, foodsm1, foodme1, foodlg1, foodsm2, foodme2, foodlg2, foodsm3, foodme3, foodlg3, bevsm, bevme, bevlg, shakesm, shakeme, shakelg;
 	int totalCustomers = 1;
+	
+	ofstream reciept_fout;
+	ifstream Bacon_Cheeseburger_fin;
+
+	Bacon_Cheeseburger_fin.open("Bacon_Cheeseburger.txt");
+
+	if (Bacon_Cheeseburger_fin.is_open()) {
+		cout << "File Opened\n" << endl;
+	}
+	else {
+		cout << "File Not Opened\n" << endl;
+	}
+
+	Bacon_Cheeseburger_fin >> food1;
+	Bacon_Cheeseburger_fin >> foodsm1;
+	Bacon_Cheeseburger_fin >> foodme1;
+	Bacon_Cheeseburger_fin >> foodlg1;
+	Bacon_Cheeseburger_fin >> food2;
+	Bacon_Cheeseburger_fin >> foodsm2;
+	Bacon_Cheeseburger_fin >> foodme2;
+	Bacon_Cheeseburger_fin >> foodlg2;
+	Bacon_Cheeseburger_fin >> food3;
+	Bacon_Cheeseburger_fin >> foodsm3;
+	Bacon_Cheeseburger_fin >> foodme3;
+	Bacon_Cheeseburger_fin >> foodlg3;
+	Bacon_Cheeseburger_fin >> bev;
+	Bacon_Cheeseburger_fin >> bevsm;
+	Bacon_Cheeseburger_fin >> bevme;
+	Bacon_Cheeseburger_fin >> bevlg;
+	Bacon_Cheeseburger_fin >> shake;
+	Bacon_Cheeseburger_fin >> shakesm;
+	Bacon_Cheeseburger_fin >> shakeme;
+	Bacon_Cheeseburger_fin >> shakelg;
+	
+	Bacon_Cheeseburger_fin.close();
+	cout << food1 << endl;
+	cout << shake << endl;
+
 	for (char NewCustomer = 'y';(NewCustomer == 'y' || NewCustomer == 'Y'); totalCustomers++) {
 		total = 0;
 		setPrice = 0;
 		Pcache = 0;
-		fin = 'n';
+		f1n = 'n';
 		cout << totalCustomers << endl;
 
 		cout << "What's your name? " << endl;
@@ -98,12 +136,12 @@ int main()
 			recieptAccumulator += "Drink: " + drink + "\nSize: " + size + "\nPrice: $" + strSetPrice + "\n\n";
 			cout << "Drink and size selected: " << drink << " " << size << endl;
 			cout << "Would you like to proceed to checkout? (Y/N) :" << endl;
-			cin >> fin;
+			cin >> f1n;
 
 			total += setPrice;
-		} while (fin == 'n' || fin == 'N');
+		} while (f1n == 'n' || f1n == 'N');
 
-		if (fin == 'y' || fin == 'Y') {
+		if (f1n == 'y' || f1n == 'Y') {
 			cout << "Are you a member? (Y/N) :" << endl;
 			cin >> isMember;
 			if (isMember == 'y' || isMember == 'Y') {
@@ -150,7 +188,7 @@ int main()
 			}
 			Grandtotalsales += total;
 			cout << endl;
-			
+
 		}
 		else {
 			cout << "Order cancelled." << endl;
