@@ -9,14 +9,18 @@
 #include <fstream>
 using namespace std;
 
+double taxes(double total);
+double priceFinder(char foodC, char sizeC, double setPrice);
+
 int main()
 {
 
-	char drinkC, sizeC, isMember, f1n;
-	string drink, size, cache, strSetPrice, recieptAccumulator, name, food1, food2, food3, foodaccum;
-	double setPrice, total, Pcache, Grandtotalsales = 0, foodsm1, foodme1, foodlg1
+	char foodC, sizeC, isMember, f1n;
+	string food, size, cache, strSetPrice, recieptAccumulator, name, food1, food2, food3, foodaccum;
+	double setPrice = 0, total, Pcache, Grandtotalsales = 0, foodsm1, foodme1, foodlg1
 		, foodsm2, foodme2, foodlg2, foodsm3, foodme3, foodlg3;
 	int totalCustomers = 1, foodamount1 = 50, foodamount2 = 50, foodamount3 = 50, count1 = 0, count2 = 0, count3 = 0;
+
 
 	ofstream reciept_fout;
 	ifstream Bacon_Cheeseburger_fin;
@@ -47,7 +51,6 @@ int main()
 
 	for (char NewCustomer = 'y';(NewCustomer == 'y' || NewCustomer == 'Y'); totalCustomers++) {
 		total = 0;
-		setPrice = 0;
 		Pcache = 0;
 		f1n = 'n';
 		cout << totalCustomers << endl;
@@ -64,9 +67,9 @@ int main()
 
 		do {
 
-			cout << "What drink would you like? (A/B/C): " << endl;
-			cin >> drinkC;
-			if (cin.fail() || drinkC != 'a' && drinkC != 'A' && drinkC != 'b' && drinkC != 'B' && drinkC != 'c' && drinkC != 'C') {
+			cout << "What food would you like? (A/B/C): " << endl;
+			cin >> foodC;
+			if (cin.fail() || foodC != 'a' && foodC != 'A' && foodC != 'b' && foodC != 'B' && foodC != 'c' && foodC != 'C') {
 				cin.clear();
 				cin.ignore(1000, '\n');
 				cout << "Invalid selection! Please enter a letter between A and C.\n";
@@ -80,21 +83,18 @@ int main()
 				cout << "Invalid selection! Please enter a letter S, M, or L.\n";
 				continue;
 			}
-			switch (drinkC) {
+			switch (foodC) {
 			case 'a':
 			case 'A':
-				drink = "Bacon Cheeseburger";
-				setPrice = 4.99;
+				food = "Bacon Cheeseburger";
 				break;
 			case 'b':
 			case 'B':
-				drink = "Loaded Cheesy Fries";
-				setPrice = 5.99;
+				food = "Loaded Cheesy Fries";
 				break;
 			case 'c':
 			case 'C':
-				drink = "Ceasar Salad";
-				setPrice = 3.99;
+				food = "Ceasar Salad";
 				break;
 			default:
 				cout << "Food Error occured internally! Terminating Program." << endl;
@@ -104,35 +104,34 @@ int main()
 			case 's':
 			case 'S':
 				size = "Small";
-				setPrice += 0;
 				break;
 			case 'm':
 			case 'M':
 				size = "Medium";
-				setPrice += 1.00;
 				break;
 			case 'l':
 			case 'L':
 				size = "Large";
-				setPrice += 2.00;
 				break;
 			default:
 				cout << "Size Error occured internally! Terminating Program." << endl;
 				return 0;
 			}
+			setPrice = priceFinder(foodC, sizeC, setPrice);
 
 			strSetPrice = to_string(setPrice);
 			strSetPrice = strSetPrice.substr(0, strSetPrice.find(".") + 3);
 
-			recieptAccumulator += "Food: " + drink + "\nSize: " + size + "\nPrice: $" + strSetPrice + "\n\n";
-			cout << "Drink and size selected: " << drink << " " << size << endl;
+			recieptAccumulator += "Food: " + food + "\nSize: " + size + "\nPrice: $" + strSetPrice + "\n\n";
+			cout << "Meal and size selected: " << food << " " << size << endl;
 			cout << "Would you like to proceed to checkout? (Y/N) :" << endl;
 			cin >> f1n;
-			if (drink == "Bacon Cheeseburger") {
+
+			if (foodC == 'A' || foodC == 'a') {
 				foodamount1 -= 1;
 				count1 += 1;
 			}
-			else if (drink == "Loaded Cheesy Fries") {
+			else if (foodC == 'B' || foodC == 'b') {
 				foodamount2 -= 1;
 				count2 += 1;
 			}
@@ -140,8 +139,6 @@ int main()
 				foodamount3 -= 1;
 				count2 += 1;
 			}
-
-
 
 			total += setPrice;
 		} while (f1n == 'n' || f1n == 'N');
@@ -152,16 +149,8 @@ int main()
 			if (isMember == 'y' || isMember == 'Y') {
 				total *= 0.9; // Apply 10% discount for members
 			}
-			double AR = total * .065;
-			double FC = total * .005;
-			double CM = total * .02125;
 
-			cout << "Arkansas State Tax: 6.5% " << AR << endl;
-			cout << "Faulkner County Tax: 0.5% " << FC << endl;
-			cout << "Conway Municipal Tax: 2.125% " << CM << endl;
-
-			total = total + AR + FC + CM;
-
+			total = taxes(total);
 			double Tip;
 			char TipS;
 			cout << "Tip Selection" << endl;
@@ -215,4 +204,44 @@ int main()
 			return 0;
 		}
 	}
+}
+double taxes(double total) {
+	double AR = total * .065;
+	double FC = total * .005;
+	double CM = total * .02125;
+
+	cout << "Arkansas State Tax: 6.5% " << AR << endl;
+	cout << "Faulkner County Tax: 0.5% " << FC << endl;
+	cout << "Conway Municipal Tax: 2.125% " << CM << endl;
+
+	total = total + AR + FC + CM;
+	return total;
+}
+
+double priceFinder(char foodC, char sizeC, double setPrice) {
+
+	if (foodC == 'A' || foodC == 'a') {
+		setPrice = 4.99;
+	}
+	else if (foodC == 'B' || foodC == 'b') {
+		setPrice = 3.99;
+	}
+	else {
+		setPrice = 5.99;
+	}
+
+
+	if (sizeC == 'S' || sizeC == 's') {
+		setPrice += 0;
+		return setPrice;
+	}
+	else if (sizeC == 'M' || sizeC == 'm') {
+		setPrice += 1;
+		return setPrice;
+	}
+	else {
+		setPrice += 2;
+		return setPrice;
+	}
+	return setPrice;
 }
